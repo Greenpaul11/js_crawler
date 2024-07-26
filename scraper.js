@@ -2,7 +2,7 @@ import * as url from 'url'
 import * as https from 'https'
 import { JSDOM } from 'jsdom'
 import axios from 'axios'
-
+import { normalizeURL, parseOriginWithPath } from './crawl.js'
 import { getHeaders, getRandomElement } from './scrape_scripts.js'
 
 
@@ -86,7 +86,22 @@ function getURLsFromHTML(htmlBody) {
     return urls
 }
 
-function scrapePage(bodyString, item) {
+function scrapePage(bodyString, url) {
+    const dom = new JSDOM(bodyString)
+    const resultsCont = dom.window.document.querySelectorAll('.offer-box')
+    for(const result of resultsCont) {
+        const price = result.querySelector('.main-price')
+        const mainLinkCont = result.querySelector('h2')
+        const mainLinkHref = mainLinkCont.querySelector('a').href
+        const productLink = parseOriginWithPath(url, mainLinkHref )
+    
+        console.log(price.getAttribute('mainprice'))
+        console.log(mainLinkCont.textContent.trim())
+        console.log(productLink)
+    }
+}
+
+function scrapePage1(bodyString, item) {
     const dom = new JSDOM(bodyString)
     // Find all links
     const links = dom.window.document.querySelectorAll('a')
@@ -126,11 +141,11 @@ async function main(item) {
     const encodedItem = encodeURIComponent(item)
     const site1 = `https://www.mediaexpert.pl/search?query%5Bquerystring%5D=${encodedItem}`
     const siteData = await getPageData(site1)
-    scrapePage(siteData, item)
+    scrapePage(siteData, site1)
     return siteData
 }
 
-let data = await main('ryzen 5600')
+let data = await main('ryzen')
 
 
 

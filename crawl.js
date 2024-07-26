@@ -15,6 +15,15 @@ function normalizeURL(urlString) {
     return newUrlFormat
 
 }
+function parseOriginWithPath(urlString, path) {
+    const urlObj = new URL(urlString)
+    const newUrl = url.format({
+        origin: urlObj.origin,
+        pathname: path
+    })
+    console.log(newUrl.origin)
+    return newUrl.href
+}
 
 
 function getURLsFromHTML(htmlBody, baseURL) {
@@ -89,4 +98,4 @@ async function crawlPage(baseURL, currentURL=baseURL, pages={}) {
 
 
 
-export { normalizeURL, getURLsFromHTML, crawlPage };
+export { normalizeURL, getURLsFromHTML, crawlPage, parseOriginWithPath };
