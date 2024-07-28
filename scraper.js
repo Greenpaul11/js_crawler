@@ -6,21 +6,6 @@ import { normalizeURL, parseOriginWithPath } from './crawl.js'
 import { getHeaders, getRandomElement } from './scrape_scripts.js'
 
 
-// const scrapeApiKey = 'd1bb73c5-203d-405e-90de-d88291c55202'
-// const proxyAddress = 'http://brd-customer-hl_996bf225-zone-web_unlocker1-country-pl:h9dvsxfxrh2u@brd.superproxy.io:22225'
-
-
-
-
-const proxyConfig = {
-    host: 'brd.superproxy.io',
-    port: '22225',
-    auth: {
-        username: 'brd-customer-hl_996bf225-zone-web_unlocker1',
-        password: 'h9dvsxfxrh2u'
-    }
-
-}
 
 
 
